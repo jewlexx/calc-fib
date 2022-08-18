@@ -3,6 +3,7 @@ use num_bigint::{BigUint, ToBigUint};
 pub fn calc_fib(n: usize) -> BigUint {
     let mut numbers = vec![1u8.to_biguint().unwrap(), 1u8.to_biguint().unwrap()];
 
+    // Start calculating the third because we have the first two
     for _ in 3..=n {
         numbers.push(numbers.get(0).unwrap() + numbers.get(1).unwrap());
         numbers.remove(0);
