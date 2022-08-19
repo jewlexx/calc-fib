@@ -56,7 +56,7 @@ impl Sequence {
     /// ```
     /// use fibonacci_like::Sequence;
     ///
-    /// let sequence = Sequence(1, 1);
+    /// let sequence = Sequence::new([1, 1]);
     /// let fib_sequence = Sequence::fibonacci();
     ///
     /// assert_eq!(sequence, fib_sequence);
