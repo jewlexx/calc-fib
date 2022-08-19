@@ -37,16 +37,50 @@ pub struct Sequence(pub Number, pub Number);
 
 impl Sequence {
     /// Creates a new sequence with the given starting values
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fibonacci_like::Sequence;
+    ///
+    /// let sequence = Sequence(1, 1);
+    /// let also_sequence = Sequence::new([1,1]);
+    ///
+    /// assert_eq!(sequence, also_sequence);
+    /// ```
     pub fn new(sequence: impl Into<Self>) -> Self {
         sequence.into()
     }
 
     /// Returns the fibonacci sequence, represented as a [`Sequence`] struct
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fibonacci_like::Sequence;
+    ///
+    /// let sequence = Sequence(1, 1);
+    /// let fib_sequence = Sequence::fibonacci();
+    ///
+    /// assert_eq!(sequence, fib_sequence);
+    /// ```
     pub fn fibonacci() -> Self {
         Self::new([1, 1])
     }
 
     /// Calculate the nth term of the sequence
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fibonacci_like::Sequence;
+    ///
+    /// let sequence = Sequence::fibonacci();
+    /// let nth_term = sequence.calculate(3);
+    /// let also_nth_term = sequence.nth(3);
+    ///
+    /// assert_eq!(nth_term, also_nth_term);
+    /// ```
     pub fn calculate(self, n: usize) -> Number {
         let mut numbers = [self.0, self.1];
 
