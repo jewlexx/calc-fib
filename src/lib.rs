@@ -87,11 +87,12 @@ impl Sequence {
     ///
     /// ```
     /// use fibonacci_like::Sequence;
+    /// # use fibonacci_like::IntoNumber;
     ///
     /// let sequence = Sequence::fibonacci();
     /// let nth_term = sequence.calculate(3);
     ///
-    /// assert_eq!(nth_term, 2);
+    /// assert_eq!(nth_term, 2_i128.into_number());
     /// ```
     pub fn calculate(self, n: usize) -> Number {
         let mut numbers = [self.0, self.1];
