@@ -178,10 +178,37 @@ mod tests {
 
     #[test]
     fn test_get_third() {
-        let first = BigInt::from_str("2").unwrap();
+        let third = BigInt::from_str("2").unwrap();
 
         let fib = Sequence::fibonacci();
 
-        assert_eq!(fib.calculate(3), first);
+        assert_eq!(fib.calculate(3), third);
+    }
+
+    #[test]
+    fn test_find_first() {
+        let first = BigInt::from_str("1").unwrap();
+
+        let fib = Sequence::fibonacci();
+
+        assert_eq!(fib.find(first), 1);
+    }
+
+    #[test]
+    fn test_find_third() {
+        let third = BigInt::from_str("2").unwrap();
+
+        let fib = Sequence::fibonacci();
+
+        assert_eq!(fib.find(third), 3);
+    }
+
+    #[test]
+    fn test_find_fifteenth() {
+        let fifteenth = BigInt::from_str("610").unwrap();
+
+        let fib = Sequence::fibonacci();
+
+        assert_eq!(fib.find(fifteenth), 15);
     }
 }
