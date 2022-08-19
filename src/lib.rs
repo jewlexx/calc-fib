@@ -1,4 +1,4 @@
-use num_bigint::{BigInt, BigUint, ToBigInt, ToBigUint};
+use num_bigint::{BigInt, BigUint, ToBigInt};
 
 pub struct Sequence(pub BigInt, pub BigInt);
 
@@ -21,15 +21,10 @@ pub fn calc_seq(start: impl Into<Sequence>, n: usize) -> BigInt {
 }
 
 pub fn calc_fib(n: usize) -> BigUint {
-    let mut numbers = vec![1u8.to_biguint().unwrap(), 1u8.to_biguint().unwrap()];
+    let res = calc_seq([1, 1], n);
 
-    // Start calculating the third because we have the first two
-    for _ in 3..=n {
-        numbers.push(numbers.get(0).unwrap() + numbers.get(1).unwrap());
-        numbers.remove(0);
-    }
-
-    numbers.remove(1)
+    res.to_biguint()
+        .expect("unexpected negative in fibonacci sequence")
 }
 
 #[cfg(test)]
