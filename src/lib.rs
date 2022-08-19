@@ -113,6 +113,37 @@ impl Sequence {
             }
         }
     }
+
+    pub fn find(self, number: Number) -> usize {
+        let mut numbers = [self.0, self.1];
+
+        if number == numbers[0] {
+            return 1;
+        } else if number == numbers[1] {
+            return 2;
+        }
+
+        let mut n = 2;
+        loop {
+            update_array(&mut numbers);
+            n += 1;
+            let is_correct = {
+                cfg_if::cfg_if! {
+                    if #[cfg(feature = "big-int")] {
+                        use num_bigint::ToBigInt;
+
+                        numbers[1].to_bigint().unwrap() == number
+                    } else {
+                        numbers[1] == number
+                    }
+                }
+            };
+
+            if is_correct {
+                break n;
+            }
+        }
+    }
 }
 
 impl From<[i128; 2]> for Sequence {
