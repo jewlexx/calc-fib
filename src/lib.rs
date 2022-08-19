@@ -32,7 +32,7 @@ cfg_if::cfg_if! {
 }
 
 /// A sequence, represented by the two starting values, which are later used to compute further values
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Sequence(pub Number, pub Number);
 
 impl Sequence {
@@ -43,10 +43,7 @@ impl Sequence {
     /// ```
     /// use fibonacci_like::Sequence;
     ///
-    /// let sequence = Sequence(1, 1);
-    /// let also_sequence = Sequence::new([1,1]);
-    ///
-    /// assert_eq!(sequence, also_sequence);
+    /// Sequence::new([1,1]);
     /// ```
     pub fn new(sequence: impl Into<Self>) -> Self {
         sequence.into()
@@ -123,5 +120,14 @@ mod tests {
         let fib = Sequence::fibonacci();
 
         assert_eq!(fib.calculate(500), nth500);
+    }
+
+    #[test]
+    fn test_get_1st() {
+        let first = BigInt::from_str("1").unwrap();
+
+        let fib = Sequence::fibonacci();
+
+        assert_eq!(fib.calculate(1), first);
     }
 }
