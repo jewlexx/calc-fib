@@ -28,6 +28,9 @@ cfg_if::cfg_if! {
             }
         }
     } else {
+        /// The number return type
+        ///
+        /// Will be either [`BigInt`] or [`i128`] based on whether the `big-int` feature is enabled or not
         pub type Number = i128;
 
         impl IntoNumber for i128 {
