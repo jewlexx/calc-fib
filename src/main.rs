@@ -11,7 +11,7 @@ fn main() {
         panic!();
     });
 
-    let number = fibonacci_like::calc_fib(nth);
+    let number = fibonacci_like::Sequence::fibonacci().calculate(nth);
 
     println!("The \"{nth}\" number of the fibonacci sequence is:\n{number}");
 }
