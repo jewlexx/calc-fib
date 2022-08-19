@@ -60,8 +60,7 @@ impl Sequence {
     /// # Examples
     ///
     /// ```
-    /// use fibonacci_like::Sequence;
-    ///
+    /// # use fibonacci_like::Sequence;
     /// Sequence::new([1,1]);
     /// ```
     pub fn new(sequence: impl Into<Self>) -> Self {
@@ -73,8 +72,7 @@ impl Sequence {
     /// # Examples
     ///
     /// ```
-    /// use fibonacci_like::Sequence;
-    ///
+    /// # use fibonacci_like::Sequence;
     /// let sequence = Sequence::new([1, 1]);
     /// let fib_sequence = Sequence::fibonacci();
     ///
@@ -89,9 +87,7 @@ impl Sequence {
     /// # Examples
     ///
     /// ```
-    /// use fibonacci_like::Sequence;
-    /// # use fibonacci_like::IntoNumber;
-    ///
+    /// # use fibonacci_like::{Sequence, IntoNumber};
     /// let sequence = Sequence::fibonacci();
     /// let nth_term = sequence.calculate(3);
     ///
@@ -119,7 +115,8 @@ impl Sequence {
     /// # Examples
     ///
     /// ```
-    /// let fifteenth = BigInt::from_str("610").unwrap();
+    /// # use fibonacci_like::{Sequence, IntoNumber};
+    /// let fifteenth = 610.into_number();
     ///
     /// let fib = Sequence::fibonacci();
     ///
@@ -165,10 +162,13 @@ impl From<[i128; 2]> for Sequence {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(feature = "big-int")]
     use std::str::FromStr;
 
     use super::*;
 
+    // This test does not work without big-int as the literal is too large to fit in i128
+    #[cfg(feature = "big-int")]
     #[test]
     fn test_get_500th() {
         let nth500 = BigInt::from_str("139423224561697880139724382870407283950070256587697307264108962948325571622863290691557658876222521294125").unwrap();
@@ -180,7 +180,7 @@ mod tests {
 
     #[test]
     fn test_get_first() {
-        let first = BigInt::from_str("1").unwrap();
+        let first = 1.into_number();
 
         let fib = Sequence::fibonacci();
 
@@ -189,7 +189,7 @@ mod tests {
 
     #[test]
     fn test_get_third() {
-        let third = BigInt::from_str("2").unwrap();
+        let third = 2.into_number();
 
         let fib = Sequence::fibonacci();
 
@@ -198,7 +198,7 @@ mod tests {
 
     #[test]
     fn test_find_first() {
-        let first = BigInt::from_str("1").unwrap();
+        let first = 1.into_number();
 
         let fib = Sequence::fibonacci();
 
@@ -207,7 +207,7 @@ mod tests {
 
     #[test]
     fn test_find_third() {
-        let third = BigInt::from_str("2").unwrap();
+        let third = 2.into_number();
 
         let fib = Sequence::fibonacci();
 
@@ -216,7 +216,7 @@ mod tests {
 
     #[test]
     fn test_find_fifteenth() {
-        let fifteenth = BigInt::from_str("610").unwrap();
+        let fifteenth = 610.into_number();
 
         let fib = Sequence::fibonacci();
 
