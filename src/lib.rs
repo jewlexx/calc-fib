@@ -97,7 +97,7 @@ impl Sequence {
     pub fn calculate(self, n: usize) -> Number {
         let mut numbers = [self.0, self.1];
 
-        for _ in 3..=n {
+        for _ in 2..n {
             update_array(&mut numbers);
         }
 
