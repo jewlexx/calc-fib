@@ -59,7 +59,14 @@ impl Sequence {
             numbers[1] = new_y;
         }
 
-        numbers[1].to_owned()
+        cfg_if::cfg_if! {
+            if #[cfg(feature = "big-int")] {
+                use num_bigint::ToBigInt;
+                numbers[1].to_bigint().unwrap()
+            } else {
+                numbers[1]
+            }
+        }
     }
 }
 
