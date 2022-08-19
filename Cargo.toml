@@ -1,5 +1,5 @@
 [package]
-name = "calc-fib"
+name = "fibonacci-like"
 version = "0.1.0"
 edition = "2021"
 
