@@ -1,5 +1,7 @@
 # Fibonacci Like
 
+![docs.rs](https://img.shields.io/docsrs/fibonacci-like)
+
 A small crate to help you interact with second order sequences, such as the Fibonacci sequence, with no_std support.
 
 ## Features
