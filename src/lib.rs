@@ -4,13 +4,33 @@
 //! A simple, lightweight library to calculate second order sequences, such as the fibonacci sequence
 
 #[cfg(feature = "big-int")]
-use num_bigint::{BigInt, ToBigInt};
+use num_bigint::BigInt;
 
 #[cfg(feature = "big-int")]
 type Number = BigInt;
 
 #[cfg(not(feature = "big-int"))]
-type Number = u128;
+type Number = i128;
+
+trait IntoNumber {
+    fn into_number(self) -> Number;
+}
+
+#[cfg(feature = "big-int")]
+impl IntoNumber for i128 {
+    fn into_number(self) -> Number {
+        use num_bigint::ToBigInt;
+
+        self.to_bigint().unwrap()
+    }
+}
+
+#[cfg(not(feature = "big-int"))]
+impl IntoNumber for i128 {
+    fn into_number(self) -> Number {
+        self
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct Sequence(pub Number, pub Number);
@@ -38,7 +58,7 @@ impl Sequence {
 
 impl From<[i128; 2]> for Sequence {
     fn from(array: [i128; 2]) -> Sequence {
-        Sequence(array[0].to_bigint().unwrap(), array[1].to_bigint().unwrap())
+        Sequence(array[0].into_number(), array[1].into_number())
     }
 }
 
