@@ -3,32 +3,31 @@
 
 //! A simple, lightweight library to calculate second order sequences, such as the fibonacci sequence
 
-#[cfg(feature = "big-int")]
-use num_bigint::BigInt;
-
-#[cfg(feature = "big-int")]
-type Number = BigInt;
-
-#[cfg(not(feature = "big-int"))]
-type Number = i128;
-
 trait IntoNumber {
     fn into_number(self) -> Number;
 }
 
-#[cfg(feature = "big-int")]
-impl IntoNumber for i128 {
-    fn into_number(self) -> Number {
-        use num_bigint::ToBigInt;
+cfg_if::cfg_if! {
+    if #[cfg(feature = "big-int")] {
+        use num_bigint::BigInt;
 
-        self.to_bigint().unwrap()
-    }
-}
+        type Number = BigInt;
 
-#[cfg(not(feature = "big-int"))]
-impl IntoNumber for i128 {
-    fn into_number(self) -> Number {
-        self
+        impl IntoNumber for i128 {
+            fn into_number(self) -> Number {
+                use num_bigint::ToBigInt;
+
+                self.to_bigint().unwrap()
+            }
+        }
+    } else {
+        type Number = i128;
+
+        impl IntoNumber for i128 {
+            fn into_number(self) -> Number {
+                self
+            }
+        }
     }
 }
 
