@@ -134,11 +134,20 @@ mod tests {
     }
 
     #[test]
-    fn test_get_1st() {
+    fn test_get_first() {
         let first = BigInt::from_str("1").unwrap();
 
         let fib = Sequence::fibonacci();
 
         assert_eq!(fib.calculate(1), first);
+    }
+
+    #[test]
+    fn test_get_third() {
+        let first = BigInt::from_str("2").unwrap();
+
+        let fib = Sequence::fibonacci();
+
+        assert_eq!(fib.calculate(3), first);
     }
 }
