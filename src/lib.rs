@@ -1,3 +1,7 @@
+#![warn(missing_docs)]
+
+//! A simple, lightweight library to calculate second order sequences, such as the fibonacci sequence
+
 use num_bigint::{BigInt, ToBigInt};
 
 #[derive(Debug, Clone)]
