@@ -3,7 +3,11 @@
 
 //! A simple, lightweight library to calculate second order sequences, such as the fibonacci sequence
 
-trait IntoNumber {
+/// The into_number trait
+///
+/// See [`Number`] for more information.
+pub trait IntoNumber {
+    /// Converts the given value into a [`Number`] type
     fn into_number(self) -> Number;
 }
 
@@ -11,7 +15,10 @@ cfg_if::cfg_if! {
     if #[cfg(feature = "big-int")] {
         use num_bigint::BigInt;
 
-        type Number = BigInt;
+        /// The number return type
+        ///
+        /// Will be either [`BigInt`] or [`i128`] based on whether the `big-int` feature is enabled or not
+        pub type Number = BigInt;
 
         impl IntoNumber for i128 {
             fn into_number(self) -> Number {
@@ -21,7 +28,7 @@ cfg_if::cfg_if! {
             }
         }
     } else {
-        type Number = i128;
+        pub type Number = i128;
 
         impl IntoNumber for i128 {
             fn into_number(self) -> Number {
