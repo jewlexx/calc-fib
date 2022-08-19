@@ -59,7 +59,7 @@ impl Sequence {
             numbers[1] = new_y;
         }
 
-        numbers[0].to_owned()
+        numbers[1].to_owned()
     }
 }
 
