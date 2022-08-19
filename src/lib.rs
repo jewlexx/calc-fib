@@ -38,6 +38,15 @@ cfg_if::cfg_if! {
     }
 }
 
+fn update_array(numbers: &mut [Number; 2]) {
+    let old_x = &numbers[0];
+    let old_y = &numbers[1];
+    let new_y = old_x + old_y;
+    // Removes the need to clone if we add 0
+    numbers[0] = old_y + 0;
+    numbers[1] = new_y;
+}
+
 /// A sequence, represented by the two starting values, which are later used to compute further values
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Sequence(pub Number, pub Number);
@@ -88,12 +97,7 @@ impl Sequence {
         let mut numbers = [self.0, self.1];
 
         for _ in 3..=n {
-            let old_x = &numbers[0];
-            let old_y = &numbers[1];
-            let new_y = old_x + old_y;
-            // Removes the need to clone if we add 0
-            numbers[0] = old_y + 0;
-            numbers[1] = new_y;
+            update_array(&mut numbers);
         }
 
         cfg_if::cfg_if! {
