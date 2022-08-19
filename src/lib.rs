@@ -74,9 +74,8 @@ impl Sequence {
     ///
     /// let sequence = Sequence::fibonacci();
     /// let nth_term = sequence.calculate(3);
-    /// let also_nth_term = sequence.nth(3);
     ///
-    /// assert_eq!(nth_term, also_nth_term);
+    /// assert_eq!(nth_term, 2);
     /// ```
     pub fn calculate(self, n: usize) -> Number {
         let mut numbers = [self.0, self.1];
