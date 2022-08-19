@@ -1,4 +1,24 @@
-use num_bigint::{BigUint, ToBigUint};
+use num_bigint::{BigInt, BigUint, ToBigInt, ToBigUint};
+
+pub struct Sequence(pub BigInt, pub BigInt);
+
+impl From<[i128; 2]> for Sequence {
+    fn from(array: [i128; 2]) -> Sequence {
+        Sequence(array[0].to_bigint().unwrap(), array[1].to_bigint().unwrap())
+    }
+}
+
+pub fn calc_seq(start: impl Into<Sequence>, n: usize) -> BigInt {
+    let seq: Sequence = start.into();
+    let mut numbers = vec![seq.0, seq.1];
+
+    for _ in 3..=n {
+        numbers.push(numbers.get(0).unwrap() + numbers.get(1).unwrap());
+        numbers.remove(0);
+    }
+
+    numbers.remove(1)
+}
 
 pub fn calc_fib(n: usize) -> BigUint {
     let mut numbers = vec![1u8.to_biguint().unwrap(), 1u8.to_biguint().unwrap()];
