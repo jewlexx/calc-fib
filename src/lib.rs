@@ -1,4 +1,5 @@
 #![warn(missing_docs)]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 //! A simple, lightweight library to calculate second order sequences, such as the fibonacci sequence
 
