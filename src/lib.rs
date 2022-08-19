@@ -31,27 +31,35 @@ cfg_if::cfg_if! {
     }
 }
 
+/// A sequence, represented by the two starting values, which are later used to compute further values
 #[derive(Debug, Clone)]
 pub struct Sequence(pub Number, pub Number);
 
 impl Sequence {
+    /// Creates a new sequence with the given starting values
     pub fn new(sequence: impl Into<Self>) -> Self {
         sequence.into()
     }
 
+    /// Returns the fibonacci sequence, represented as a [`Sequence`] struct
     pub fn fibonacci() -> Self {
         Self::new([1, 1])
     }
 
+    /// Calculate the nth term of the sequence
     pub fn calculate(self, n: usize) -> Number {
-        let mut numbers = vec![self.0, self.1];
+        let mut numbers = [self.0, self.1];
 
         for _ in 3..=n {
-            numbers.push(numbers.get(0).unwrap() + numbers.get(1).unwrap());
-            numbers.remove(0);
+            let old_x = &numbers[0];
+            let old_y = &numbers[1];
+            let new_y = old_x + old_y;
+            // Removes the need to clone if we add 0
+            numbers[0] = old_y + 0;
+            numbers[1] = new_y;
         }
 
-        numbers.remove(1)
+        numbers[0].to_owned()
     }
 }
 
