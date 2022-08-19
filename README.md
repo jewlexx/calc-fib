@@ -1,6 +1,10 @@
 # Fibonacci Like
 
 ![docs.rs](https://img.shields.io/docsrs/fibonacci-like)
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/cargo/fibonacci-like)
+![Crates.io](https://img.shields.io/crates/v/fibonacci-like)
+![Crates.io](https://img.shields.io/crates/d/fibonacci-like)
+![no_std support](https://img.shields.io/badge/no__std-supported-green)
 
 A small crate to help you interact with second order sequences, such as the Fibonacci sequence, with no_std support.
 
