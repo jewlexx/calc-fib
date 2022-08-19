@@ -8,10 +8,12 @@ fn main() {
         panic!();
     });
 
-    BigUint::from_str(&arg).unwrap_or_else(|_| {
+    let nth = usize::from_str(&arg).unwrap_or_else(|_| {
         println!("Please pass a valid number");
         panic!();
     });
 
-    println!("Hello, world!");
+    let number = calc_fib::calc_fib(nth);
+
+    println!("The \"{nth}\" number of the fibonacci sequence is:\n{number}");
 }
