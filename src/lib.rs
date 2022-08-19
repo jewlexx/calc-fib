@@ -114,6 +114,17 @@ impl Sequence {
         }
     }
 
+    /// Find the given number's position in the sequence
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let fifteenth = BigInt::from_str("610").unwrap();
+    ///
+    /// let fib = Sequence::fibonacci();
+    ///
+    /// assert_eq!(fib.find(fifteenth), 15);
+    /// ```
     pub fn find(self, number: Number) -> usize {
         let mut numbers = [self.0, self.1];
 
