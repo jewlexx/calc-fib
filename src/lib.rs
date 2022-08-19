@@ -3,10 +3,17 @@
 
 //! A simple, lightweight library to calculate second order sequences, such as the fibonacci sequence
 
+#[cfg(feature = "big-int")]
 use num_bigint::{BigInt, ToBigInt};
 
+#[cfg(feature = "big-int")]
+type Number = BigInt;
+
+#[cfg(not(feature = "big-int"))]
+type Number = u128;
+
 #[derive(Debug, Clone)]
-pub struct Sequence(pub BigInt, pub BigInt);
+pub struct Sequence(pub Number, pub Number);
 
 impl Sequence {
     pub fn new(sequence: impl Into<Self>) -> Self {
@@ -17,7 +24,7 @@ impl Sequence {
         Self::new([1, 1])
     }
 
-    pub fn calculate(self, n: usize) -> BigInt {
+    pub fn calculate(self, n: usize) -> Number {
         let mut numbers = vec![self.0, self.1];
 
         for _ in 3..=n {
