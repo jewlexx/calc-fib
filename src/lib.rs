@@ -11,30 +11,23 @@ pub trait IntoNumber {
     fn into_number(self) -> Number;
 }
 
-cfg_if::cfg_if! {
-    if #[cfg(feature = "big-int")] {
-        use num_bigint::BigInt;
+/// The number return type
+///
+/// Will be either [`BigInt`] or [`i128`] based on whether the `big-int` feature is enabled or not
+#[cfg(feature = "big-int")]
+pub type Number = num_bigint::BigInt;
 
-        /// The number return type
-        ///
-        /// Will be either [`BigInt`] or [`i128`] based on whether the `big-int` feature is enabled or not
-        pub type Number = BigInt;
+#[cfg(not(feature = "big-int"))]
+pub type Number = i128;
 
-        impl IntoNumber for i128 {
-            fn into_number(self) -> Number {
+impl IntoNumber for i128 {
+    fn into_number(self) -> Number {
+        cfg_if::cfg_if! {
+            if #[cfg(feature = "big-int")] {
                 use num_bigint::ToBigInt;
 
                 self.to_bigint().unwrap()
-            }
-        }
-    } else {
-        /// The number return type
-        ///
-        /// Will be either [`BigInt`] or [`i128`] based on whether the `big-int` feature is enabled or not
-        pub type Number = i128;
-
-        impl IntoNumber for i128 {
-            fn into_number(self) -> Number {
+            } else {
                 self
             }
         }
@@ -162,8 +155,12 @@ impl From<[i128; 2]> for Sequence {
 
 #[cfg(test)]
 mod tests {
-    #[cfg(feature = "big-int")]
-    use std::str::FromStr;
+    cfg_if::cfg_if! {
+        if #[cfg(feature = "big-int")] {
+            use num_bigint::BigInt;
+            use std::str::FromStr;
+        }
+    }
 
     use super::*;
 
