@@ -24,10 +24,8 @@ fibonacci_like = "0.1"
 ## Usage
 
 ```rust
-use fibonacci_like::IntoNumber;
-
 let nth = 69;
-let number = fibonacci_like::Sequence::fibonacci().find(nth.into_number());
+let number = fibonacci_like::Sequence::fibonacci().calculate(nth);
 
 println!("The \"{nth}\" number of the fibonacci sequence is:\n{number}");
 ```
