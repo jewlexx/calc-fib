@@ -1,7 +1,6 @@
 #![warn(missing_docs)]
 #![cfg_attr(not(feature = "std"), no_std)]
-
-//! A simple, lightweight library to calculate second order sequences, such as the fibonacci sequence
+#![doc = include_str!("../README.md")]
 
 /// The into_number trait
 ///
@@ -13,7 +12,7 @@ pub trait IntoNumber {
 
 /// The number return type
 ///
-/// Will be either [`BigInt`] or [`i128`] based on whether the `big-int` feature is enabled or not
+/// Will be either [`num_bigint::BigInt`] or [`i128`] based on whether the `big-int` feature is enabled or not
 #[cfg(feature = "big-int")]
 pub type Number = num_bigint::BigInt;
 
