@@ -2,6 +2,32 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 #![doc = include_str!("../README.md")]
 
+/// An error for when the given input could not be found in the sequence
+#[derive(Debug)]
+pub enum FindError {
+    /// The input was not found in the sequence
+    NotFound(Number),
+}
+
+impl core::fmt::Display for FindError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            FindError::NotFound(number) => {
+                write!(f, "The number `{}` was not found in the sequence", number)
+            }
+        }
+    }
+}
+
+#[cfg(feature = "std")]
+impl std::error::Error for FindError {}
+
+#[cfg(feature = "std")]
+type FindResult<T> = Result<T, FindError>;
+
+#[cfg(not(feature = "std"))]
+type FindResult<T> = Result<T, dyn Send + Sync + Display + 'static>;
+
 /// The into_number trait
 ///
 /// See [`Number`] for more information.
@@ -112,35 +138,28 @@ impl Sequence {
     ///
     /// let fib = Sequence::fibonacci();
     ///
-    /// assert_eq!(fib.find(fifteenth), 15);
+    /// assert_eq!(fib.find(fifteenth).unwrap(), 15);
     /// ```
-    pub fn find(self, number: Number) -> usize {
+    pub fn find(self, number: Number) -> FindResult<usize> {
         let mut numbers = [self.0, self.1];
 
         if number == numbers[0] {
-            return 1;
+            return Ok(1);
         } else if number == numbers[1] {
-            return 2;
+            return Ok(2);
         }
 
         let mut n = 2;
         loop {
             update_array(&mut numbers);
             n += 1;
-            let is_correct = {
-                cfg_if::cfg_if! {
-                    if #[cfg(feature = "big-int")] {
-                        use num_bigint::ToBigInt;
 
-                        numbers[1].to_bigint().unwrap() == number
-                    } else {
-                        numbers[1] == number
-                    }
-                }
-            };
+            if numbers[1] > number {
+                break Err(FindError::NotFound(number));
+            }
 
-            if is_correct {
-                break n;
+            if numbers[1] == number {
+                break Ok(n);
             }
         }
     }
@@ -198,7 +217,7 @@ mod tests {
 
         let fib = Sequence::fibonacci();
 
-        assert_eq!(fib.find(first), 1);
+        assert_eq!(fib.find(first).unwrap(), 1);
     }
 
     #[test]
@@ -207,7 +226,7 @@ mod tests {
 
         let fib = Sequence::fibonacci();
 
-        assert_eq!(fib.find(third), 3);
+        assert_eq!(fib.find(third).unwrap(), 3);
     }
 
     #[test]
@@ -216,6 +235,6 @@ mod tests {
 
         let fib = Sequence::fibonacci();
 
-        assert_eq!(fib.find(fifteenth), 15);
+        assert_eq!(fib.find(fifteenth).unwrap(), 15);
     }
 }
