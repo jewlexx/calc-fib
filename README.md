@@ -18,7 +18,7 @@ A small crate to help you interact with second order sequences, such as the Fibo
 
 ```toml
 [dependencies]
-fibonacci_like = "0.1"
+fibonacci-like = "0.1"
 ```
 
 ## Usage
