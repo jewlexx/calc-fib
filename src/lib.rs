@@ -22,11 +22,7 @@ impl core::fmt::Display for FindError {
 #[cfg(feature = "std")]
 impl std::error::Error for FindError {}
 
-#[cfg(feature = "std")]
 type FindResult<T> = Result<T, FindError>;
-
-#[cfg(not(feature = "std"))]
-type FindResult<T> = Result<T, dyn Send + Sync + Display + 'static>;
 
 /// The into_number trait
 ///
@@ -42,6 +38,9 @@ pub trait IntoNumber {
 #[cfg(feature = "big-int")]
 pub type Number = num_bigint::BigInt;
 
+/// The number return type
+///
+/// Will be either [`num_bigint::BigInt`] or [`i128`] based on whether the `big-int` feature is enabled or not
 #[cfg(not(feature = "big-int"))]
 pub type Number = i128;
 
